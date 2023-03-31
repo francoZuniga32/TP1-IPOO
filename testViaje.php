@@ -1,6 +1,6 @@
 <?php
 include_once 'Viajes.php';
-$vuelo;
+$viaje;
 
 do {
     echo "Ingrese una de las siguientes opciones:";
@@ -11,13 +11,13 @@ do {
             $viaje = opcion1();
             break;
         case 2:
-            $viaje = opcion2($viaje);
+            if(existeViaje($viaje)) $viaje = opcion2($viaje);
             break;
         case 3: 
-            $viaje = opcion3($viaje);
+            if(existeViaje($viaje))$viaje = opcion3($viaje);
             break;
         case 4: 
-            $viaje = opcion4($viaje);
+            if(existeViaje($viaje)) $viaje = opcion4($viaje);
             break;
         case 5:
             $opcion = -1;
@@ -51,7 +51,6 @@ function opcion1(){
 
 function opcion2($viaje){
     echo "--------------------------\n";
-    echo $viaje->cantidadAsientosDisponibles() ;
     if($viaje->cantidadAsientosDisponibles() > 0){
         do {
             echo "Ingrese el dni del pasajero\n";
@@ -78,7 +77,7 @@ function opcion3($viaje){
         echo "Ingrese el dni del pasajero:\n";
         $dni = intval(trim(fgets(STDIN)));
         $indice = $viaje->buscarPasajero($dni);
-        if($indice == -1) echo "El pasajero con el dni: ".$dni." no esta registrado"; 
+        if($indice == -1) echo "El pasajero con el dni: ".$dni." no esta registrado\n"; 
     }while($indice == -1);
     $pasajero = $viaje->getPasajero($indice);
     echo "Pasajero:";
@@ -97,5 +96,13 @@ function opcion4($viaje){
     echo "NroViaje:".$viaje->getNroViaje()."\n";
     echo 'Destino: '.$viaje->getDestino()."\n";
     echo 'Cantidad Maxima Pasajeros: '.$viaje->getCapacidadMaxima()."\n";
+}
+
+function existeViaje($viaje){
+    if(!isset($viaje)){
+        echo "Tiene que crear el viaje primero.\n";
+        return false;
+    }
+    return true;
 }
 ?>
