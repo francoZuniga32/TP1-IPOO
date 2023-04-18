@@ -4,6 +4,7 @@ class Viaje {
     private $nroviaje;
     private $destino;
     private $cantidadMaximaPasajeros;
+    private $resposable;
     private $pasajeros = [];
 
     public function __construct($nroviaje, $destino, $cantidadMaximaPasajeros)
@@ -22,7 +23,7 @@ class Viaje {
         $indice = -1;
         $control = true;
         while($i < count($this->pasajeros) && $control){
-            if($this->pasajeros[$i]['dni'] == $dni){
+            if($this->pasajeros[$i]->getDni() == $dni){
                 $indice = $i;
                 $control = false;
             }
@@ -32,9 +33,10 @@ class Viaje {
         return $indice;
     }  
 
-    public function modificarPasajero($indice, $nuevoNombre, $nuevoApellido){
-        $this->pasajeros[$indice]['nombre'] = $nuevoNombre;
-        $this->pasajeros[$indice]['apellido'] = $nuevoApellido;
+    public function modificarPasajero($indice, $nuevoNombre, $nuevoApellido, $telefono){
+        $this->pasajeros[$indice]->setNombre($nuevoNombre);
+        $this->pasajeros[$indice]->setApellido($nuevoApellido);
+        $this->pasajeros[$indice]->setTelefono($telefono);
     }
 
     public function cantidadAsientosDisponibles(){
@@ -57,6 +59,14 @@ class Viaje {
 
     public function getCapacidadMaxima(){
         return $this->cantidadMaximaPasajeros;
+    }
+
+    public function getResposable(){
+        return $this->resposable;
+    }
+
+    public function setResponsable($resposable){
+        $this->resposable = $resposable;
     }
 }
 
